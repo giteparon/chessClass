@@ -7,32 +7,50 @@
  	"build": {
         "dockerfile": "Dockerfile"
     },
+
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
 			"version": "21",
 			"installMaven": "true",
 			"installGradle": "false"
 		},
-		 "ghcr.io/devcontainers/features/desktop-lite:1": {
-            "password": "vscode",
-            "webPort": "6080",
-            "vncPort": "5901"
-        }
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+          "password": "vscode",
+          "webPort": "6080",
+          "vncPort": "5901"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    }
 	},
 	 "hostRequirements": {
         "cpus": 4,
         "memory": "16gb",
         "storage": "32gb"
       },
-	"extensions": [
-        "vscjava.vscode-java-pack"
-        // ... other extensions
-      ],
-	"settings": {
-    "github.copilot.inlineSuggest.enable": false,
-    "github.copilot.enable": false,
-    "chat.disableAIFeatures": true
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "java.server.launchMode": "Standard",
+          "github.copilot.inlineSuggest.enable": false,
+          "github.copilot.enable": false,
+          "chat.disableAIFeatures": true
+        },
+      "extensions": [
+          "vscjava.vscode-java-pack"
+          // ... other extensions
+        ]
+    },  
+    "forwardPorts": [6080],
+    "portsAttributes": {
+      "6080": {
+        "label": "Application Port"
+      }
+    }
   }
+	
+	
+
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
 }
