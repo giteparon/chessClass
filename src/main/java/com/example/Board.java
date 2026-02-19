@@ -74,7 +74,17 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         //the reason this is required has to do with how visual components are rendered, so if you neglect to do this
         //you will not see any of your squares show up on the board!
         // Where's the "add" method? Stay tuned for next unit where we discover where it is and why we can do this action.
-        
+        boolean squareColor = true;
+        for(int i = 0; i < 8; i ++){
+            for(int j = 0; j < 8; j++){
+                Square s = new Square(this, squareColor, i, j);
+                this.add(s);
+                board[i][j] = s;
+                squareColor = !squareColor;
+            }
+            squareColor = !squareColor;
+            
+        }
         
         initializePieces();
 
@@ -95,6 +105,13 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     void initializePieces() {
 
         board[0][0].put(new Piece(true, RESOURCES_WKING_PNG));
+        
+        for(int i = 0; i < 8; i++){
+            board[1][i].put(new Piece(true, RESOURCES_WPAWN_PNG));
+        }
+        for(int i = 0; i < 8; i++){
+            board[6][i].put(new Piece(true, RESOURCES_BPAWN_PNG));
+        }
 
     }
 
