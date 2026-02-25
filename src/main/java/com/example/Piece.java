@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 public class Piece {
     private final boolean color;
     private BufferedImage img;
-    
+    private boolean hasMoved;
     public Piece(boolean isWhite, String img_file) {
         this.color = isWhite;
          
@@ -61,9 +61,16 @@ public class Piece {
         else{
             color = -1;
         }
-        list.add(board[col + 1][row + color]);
-        list.add(board[col - 1][row + color]);
-        return null;
+        if(board[row + 1][col + color].getOccupyingPiece() != null){
+            list.add(board[row + 1][col + color]);
+        }
+        else if(board[row - 1][col + color].getOccupyingPiece() != null){
+            list.add(board[row - 1][col + color]);
+        }
+        
+        
+        
+        return list;
         
     }
     
@@ -76,6 +83,56 @@ public class Piece {
     //going to score any points.
     
     public ArrayList<Square> getLegalMoves(Board b, Square start){
-    	return null;
+        try {
+        ArrayList<Square> list = new ArrayList<>();
+        Square[][] sq = b.getSquareArray();
+        int multiplyColor = -1;
+        if(color){
+            multiplyColor = 1;
+        }
+        if(!sq[start.getRow() + multiplyColor][start.getCol()].isOccupied()){
+            if(start.getRow() != 0 && start.getRow()!= 7){
+                if(start.getRow() == 6 && !color){
+                    list.add(sq[start.getRow() + (2 * multiplyColor)][start.getCol()]);
+                }
+                if(start.getRow() == 1 && color){
+                    list.add(sq[start.getRow() + (2 * multiplyColor)][start.getCol()]);
+                }
+        // else if(start.getRow() == 7 && color != true){
+        //     list.add(sq[5][start.getRow()]);
+        // }
+                list.add(sq[start.getRow() + multiplyColor][start.getCol()]);
+            
+            
+            
+        // else if(color != true){
+        //     list.add(sq[start.getCol() - 1][start.getRow()]);
+        // }
+          //  System.out.println("row : " + start.getRow() + " col : "+ start.getCol());
+            }
+        }
+        if(start.getCol() == 0 && sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupied()){
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+            }
+            else if(start.getCol() == 7 && sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupied()){
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+            }
+            
+            else{
+                if(sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupied()){
+                    list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+                }
+                if(sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupied()){
+                    list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+                }
+            }
+    	
+        return list;
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("you moved illegally");
+             ArrayList<Square> list = new ArrayList<>();
+            return list;
+        }
     }
 }

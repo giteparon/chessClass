@@ -9,13 +9,9 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.net.URL;
-import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 //You will be implmenting a part of a function and a whole function in this document. Please follow the directions for the 
 //suggested order of completion that should make testing easier.
@@ -93,7 +89,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         this.setMinimumSize(this.getPreferredSize());
         this.setSize(new Dimension(400, 400));
 
-        whiteTurn = true;
+        whiteTurn = false;
 
     }
 
@@ -110,7 +106,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             board[1][i].put(new Piece(true, RESOURCES_WPAWN_PNG));
         }
         for(int i = 0; i < 8; i++){
-            board[6][i].put(new Piece(true, RESOURCES_BPAWN_PNG));
+            board[6][i].put(new Piece(false, RESOURCES_BPAWN_PNG));
         }
 
     }
@@ -159,6 +155,16 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             currPiece = sq.getOccupyingPiece();
             fromMoveSquare = sq;
             sq.setDisplay(false);
+            
+            for(Square s: currPiece.getLegalMoves(this, sq)){
+                System.out.println("trying to move to " + s);
+                s.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+            }
+            // for(Square[] sqr: board){
+            //     for(Square s: sqr){
+            //          s.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+            //     }
+            // }
         }
         repaint();
     }
@@ -169,11 +175,21 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     // complete it by moving the new piece to it's new board location.
     @Override
     public void mouseReleased(MouseEvent e) {
-        endSquare = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
+        if(currPiece != null){
+            endSquare = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
 
-        // using currPiece
-        if(fromMoveSquare!= null){
-            fromMoveSquare.setDisplay(true);
+            // using currPiece
+            if(fromMoveSquare!= null){
+                fromMoveSquare.setDisplay(true);
+            }
+            // System.out.println(endSquare);
+            // System.out.println(currPiece.getLegalMoves(this, fromMoveSquare));
+            if(currPiece.getLegalMoves(this, fromMoveSquare).contains(endSquare)){
+            //  System.out.println("a");
+                fromMoveSquare.removePiece();
+                endSquare.put(currPiece);
+            }
+
         }
         currPiece = null;
         repaint();
@@ -183,7 +199,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public void mouseDragged(MouseEvent e) {
         currX = e.getX() - PIECE_OFFSET;
         currY = e.getY() - PIECE_OFFSET;
-
+        
         repaint();
     }
 
