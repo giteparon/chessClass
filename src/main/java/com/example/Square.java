@@ -19,6 +19,7 @@ public class Square extends JComponent {
     
     //if there's a piece on the square this stores it. If there isn't this stores null.
     private Piece occupyingPiece;
+    private boolean occupyingPieceColor;
     
     //True means to display the piece. This property will be switched to false when we are dragging a piece around while choosing our next move.
     private boolean dispPiece;
@@ -45,7 +46,14 @@ public class Square extends JComponent {
     public Piece getOccupyingPiece() {
         return occupyingPiece;
     }
-    
+    public int isOccupiedWhite(){
+        if(occupyingPiece.getColor()){
+            return 1;
+        }
+        else{
+            return -1;
+        }
+    }
     public boolean isOccupied() {
         return (this.occupyingPiece != null);
     }

@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 //you will need to implement two functions in this file.
 public class Piece {
     private final boolean color;
-    private BufferedImage img;
+    private BufferedImage img; 
     private boolean hasMoved;
     public Piece(boolean isWhite, String img_file) {
         this.color = isWhite;
@@ -24,7 +24,14 @@ public class Piece {
             System.out.println("File not found: " + e.getMessage());
           }
     }
-    
+    public String getPieceName(){
+        for(int i = 0; i < this.img.toString().length(); i++){
+            if(this.img.toString().charAt(i) == '.'){
+                return this.img.toString().substring(0, i);
+            }
+        }
+        return null;
+    }
     
 
     
@@ -87,8 +94,10 @@ public class Piece {
         ArrayList<Square> list = new ArrayList<>();
         Square[][] sq = b.getSquareArray();
         int multiplyColor = -1;
+        int enPassantRow = 3;
         if(color){
             multiplyColor = 1;
+            enPassantRow++;
         }
         if(!sq[start.getRow() + multiplyColor][start.getCol()].isOccupied()){
             if(start.getRow() != 0 && start.getRow()!= 7){
@@ -101,7 +110,7 @@ public class Piece {
         // else if(start.getRow() == 7 && color != true){
         //     list.add(sq[5][start.getRow()]);
         // }
-                list.add(sq[start.getRow() + multiplyColor][start.getCol()]);
+            list.add(sq[start.getRow() + multiplyColor][start.getCol()]);
             
             
             
@@ -111,27 +120,46 @@ public class Piece {
           //  System.out.println("row : " + start.getRow() + " col : "+ start.getCol());
             }
         }
-        if(start.getCol() == 0 && sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupied()){
+        if(start.getCol() == 0 && sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupied() && sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupiedWhite() == multiplyColor * -1){
                 list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
             }
-            else if(start.getCol() == 7 && sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupied()){
+        else if(start.getCol() == 7 && sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupied() && sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupiedWhite() == multiplyColor * -1){
                 list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
             }
             
-            else{
-                if(sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupied()){
+        else if(start.getCol() != 0 && start.getCol() != 7){
+            if(sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupied() && sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupiedWhite() == multiplyColor * -1 ){
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+            }
+            if(sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupied() && sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupiedWhite() == multiplyColor * -1 ){
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+            }
+        }
+        else{
+            if(start.getCol() == 0){
+                if(sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupied() && sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupiedWhite() == multiplyColor * -1 ){
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+            }
+            }
+            if(start.getCol() == 7){
+                if(sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupied() && sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupiedWhite() == multiplyColor * -1){
                     list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
                 }
-                if(sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupied()){
-                    list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+            }   
+        }
+        if(start.getRow() == enPassantRow){
+            if(start.getCol != 0 && start.getCol() != 7){
+                if( sq[start.getRow()][start.getCol() + 1].getOccupyingPiece().getPieceName().contains("pawn") && ){
+                
                 }
             }
+        }
     	
         return list;
         }
         catch(IndexOutOfBoundsException e){
-            System.out.println("you moved illegally");
-             ArrayList<Square> list = new ArrayList<>();
+            System.out.println("you moved illegally" + e);
+            ArrayList<Square> list = new ArrayList<>();
             return list;
         }
     }

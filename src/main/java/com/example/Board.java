@@ -44,6 +44,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     // if the player is currently dragging a piece this variable contains it.
     Piece currPiece;
+    public Piece lastMovedPiece;
     //the square your piece came from when the user tries to move it.
     private Square fromMoveSquare;
     //the square your piece tries to go to when the user tries to move it.
@@ -191,7 +192,9 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             }
 
         }
+        lastMovedPiece = currPiece;
         currPiece = null;
+        
         repaint();
     }
 
