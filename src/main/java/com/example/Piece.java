@@ -13,9 +13,10 @@ public class Piece {
     private final boolean color;
     private BufferedImage img; 
     private boolean hasMoved;
+    private String imgFile ;
     public Piece(boolean isWhite, String img_file) {
         this.color = isWhite;
-         
+        this.imgFile = img_file;
         try {
             if (this.img == null) {
                 this.img = ImageIO.read(new File(System.getProperty("user.dir")+img_file));
@@ -25,12 +26,16 @@ public class Piece {
           }
     }
     public String getPieceName(){
-        for(int i = 0; i < this.img.toString().length(); i++){
-            if(this.img.toString().charAt(i) == '.'){
-                return this.img.toString().substring(0, i);
+        if(this != null){
+            for(int i = 0; i < this.imgFile.length(); i++){
+                if(this.imgFile.charAt(i) == '.'){
+                    System.out.println(this.imgFile);
+                    return this.imgFile.substring(0, i);
+
+                }
             }
         }
-        return null;
+        return "no piece";
     }
     
 
@@ -80,7 +85,10 @@ public class Piece {
         return list;
         
     }
-    
+    public void promote(){
+        //gui to be implemented
+
+ }
 
     //TO BE IMPLEMENTED!
     //implement the move function here
@@ -148,17 +156,53 @@ public class Piece {
             }   
         }
         if(start.getRow() == enPassantRow){
-            if(start.getCol != 0 && start.getCol() != 7){
-                if( sq[start.getRow()][start.getCol() + 1].getOccupyingPiece().getPieceName().contains("pawn") && ){
-                
+            System.out.println("in en passant row");
+            if(start.getCol() != 0 && start.getCol() != 7){
+                if( b.lastMovedPiece == sq[start.getRow()][start.getCol() + 1].getOccupyingPiece() && b.lastMovedPiece.getColor() != this.color && sq[start.getRow()][start.getCol() + 1].getOccupyingPiece() != null){
+                    System.out.println("in en passant row but name is wrong" + sq[start.getRow()][start.getCol() + 1].getOccupyingPiece().getPieceName().toString());
+                    
+                    if(sq[start.getRow()][start.getCol() + 1].getOccupyingPiece().getPieceName().contains("pawn")){
+                        list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+                        sq[start.getRow()][start.getCol() + 1].removePiece();
+                        System.out.println("in en passant row and trying to add");
+                    }
+                    
+                }
+                if(b.lastMovedPiece == sq[start.getRow()][start.getCol() + multiplyColor].getOccupyingPiece() && b.lastMovedPiece.getColor() != this.color && sq[start.getRow()][start.getCol() - 1].getOccupyingPiece() != null){
+                    if(sq[start.getRow()][start.getCol() - 1].getOccupyingPiece().getPieceName().contains("pawn")){
+                        list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+                    }
                 }
             }
+            else if(start.getCol() == 7){
+                if(b.lastMovedPiece == sq[start.getRow()][start.getCol() -1 ].getOccupyingPiece() && b.lastMovedPiece.getColor() != this.color && sq[start.getRow()][start.getCol()- 1].getOccupyingPiece() != null){
+                    if(sq[start.getRow()][start.getCol() - 1].getOccupyingPiece().getPieceName().contains("pawn")){
+                        list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+                    }
+                }
+            }
+            else if(start.getCol() == 0){
+                if( b.lastMovedPiece == sq[start.getRow()][start.getCol() + 1].getOccupyingPiece() && b.lastMovedPiece.getColor() != this.color && sq[start.getRow()][start.getCol() + 1].getOccupyingPiece() != null){
+                    if(sq[start.getRow()][start.getCol() + 1].getOccupyingPiece().getPieceName().contains("pawn")){
+                        list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+                    }
+                }
+            }
+            else{
+                System.out.println("one of them is null");
+            }
+        
         }
     	
         return list;
         }
         catch(IndexOutOfBoundsException e){
             System.out.println("you moved illegally" + e);
+            ArrayList<Square> list = new ArrayList<>();
+            return list;
+        }
+        catch(NullPointerException e){
+            System.out.println("one besides you is null" + e);
             ArrayList<Square> list = new ArrayList<>();
             return list;
         }

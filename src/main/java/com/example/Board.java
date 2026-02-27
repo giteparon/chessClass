@@ -90,7 +90,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         this.setMinimumSize(this.getPreferredSize());
         this.setSize(new Dimension(400, 400));
 
-        whiteTurn = false;
+        whiteTurn = true;
 
     }
 
@@ -157,10 +157,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             fromMoveSquare = sq;
             sq.setDisplay(false);
             
-            for(Square s: currPiece.getLegalMoves(this, sq)){
-                System.out.println("trying to move to " + s);
-                s.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
-            }
+            // for(Square s: currPiece.getLegalMoves(this, sq)){
+            //     System.out.println("trying to move to " + s);
+            //     s.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+            // }
             // for(Square[] sqr: board){
             //     for(Square s: sqr){
             //          s.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
@@ -189,11 +189,19 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             //  System.out.println("a");
                 fromMoveSquare.removePiece();
                 endSquare.put(currPiece);
+                if(endSquare.getRow() == 0 || endSquare.getRow() == 7){
+                    if(currPiece.getPieceName().contains("pawn")){
+                        currPiece.promote();
+                    }
+                }
+                whiteTurn = !whiteTurn;
+                lastMovedPiece = currPiece;
             }
 
         }
-        lastMovedPiece = currPiece;
+        
         currPiece = null;
+        
         
         repaint();
     }

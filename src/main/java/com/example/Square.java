@@ -42,6 +42,10 @@ public class Square extends JComponent {
     public boolean getColor() {
         return this.color;
     }
+    // public void take(){
+    //     this.occupyingPiece = null;
+    //     this.dispPiece = false;
+    // }
     
     public Piece getOccupyingPiece() {
         return occupyingPiece;
