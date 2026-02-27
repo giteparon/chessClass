@@ -100,6 +100,7 @@ public class Piece {
     public ArrayList<Square> getLegalMoves(Board b, Square start){
         try {
         ArrayList<Square> list = new ArrayList<>();
+
         Square[][] sq = b.getSquareArray();
         int multiplyColor = -1;
         int enPassantRow = 3;
@@ -163,7 +164,7 @@ public class Piece {
                     
                     if(sq[start.getRow()][start.getCol() + 1].getOccupyingPiece().getPieceName().contains("pawn")){
                         list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
-                        sq[start.getRow()][start.getCol() + 1].removePiece();
+                        
                         System.out.println("in en passant row and trying to add");
                     }
                     
