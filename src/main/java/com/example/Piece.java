@@ -41,7 +41,13 @@ public class Piece {
 
     
     public boolean getColor() {
-        return color;
+        try{
+            return this.color;
+        }
+        catch(NullPointerException e){
+            System.out.println("get color erroerd " + e);
+            return false;
+        }
     }
     
     public Image getImage() {
@@ -61,27 +67,38 @@ public class Piece {
     // TO BE IMPLEMENTED!
     //return a list of every square that is "controlled" by this piece. A square is controlled
     //if the piece capture into it legally.
-    public ArrayList<Square> getControlledSquares(Square[][] board, Square start) {
-        int col = start.getCol();
-        int row = start.getRow();
-        int color;
+    public ArrayList<Square> getControlledSquares(Board b, Square start) {
+        Square[][] sq = b.getSquareArray();
+        int multiplyColor = -1;
+        if(color){
+            multiplyColor = 1;
+        }
         ArrayList<Square> list = new ArrayList<>();
 
-        if(this.color == true){
-            color = 1;
+        // if(start.getCol() == 0 &&  sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupiedWhite() == multiplyColor * -1){
+        //         list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+        //     }
+        // else if(sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupiedWhite() == multiplyColor * -1){
+        //         list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+        //     }
+            
+        if(start.getCol() != 0 && start.getCol() != 7){
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
         }
         else{
-            color = -1;
-        }
-        if(board[row + 1][col + color].getOccupyingPiece() != null){
-            list.add(board[row + 1][col + color]);
-        }
-        else if(board[row - 1][col + color].getOccupyingPiece() != null){
-            list.add(board[row - 1][col + color]);
-        }
+            if(start.getCol() == 0){
+                // if(sq[start.getRow() + multiplyColor][start.getCol() + 1].isOccupiedWhite() == multiplyColor * -1 ){
+                list.add(sq[start.getRow() + multiplyColor][start.getCol() + 1]);
+            }
+            }
+            if(start.getCol() == 7){
+                // if(sq[start.getRow() + multiplyColor][start.getCol() - 1].isOccupiedWhite() == multiplyColor * -1){
+                    list.add(sq[start.getRow() + multiplyColor][start.getCol() - 1]);
+                }
+              
         
-        
-        
+       
         return list;
         
     }

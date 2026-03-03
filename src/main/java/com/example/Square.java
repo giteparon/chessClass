@@ -51,12 +51,16 @@ public class Square extends JComponent {
         return occupyingPiece;
     }
     public int isOccupiedWhite(){
-        if(occupyingPiece.getColor()){
-            return 1;
+        if(occupyingPiece != null){
+            if(occupyingPiece.getColor()){
+                return 1;
+            }
+            else{
+                return -1;
+            }
         }
-        else{
-            return -1;
-        }
+        return 0;
+        
     }
     public boolean isOccupied() {
         return (this.occupyingPiece != null);
