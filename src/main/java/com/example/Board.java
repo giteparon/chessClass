@@ -178,6 +178,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     // should move the piece to the desired location only if this is a legal move.
     // use the pieces "legal move" function to determine if this move is legal, then
     // complete it by moving the new piece to it's new board location.
+    //precondition: every variable and method are defined and working, and currpiece is not accidently null
+    //post condition : if the move was on a square which is in legalmoves move the piece there and display color for both controlled and legal moves
     @Override
     public void mouseReleased(MouseEvent e) {
         if(currPiece != null){

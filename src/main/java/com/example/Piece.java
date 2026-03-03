@@ -67,6 +67,8 @@ public class Piece {
     // TO BE IMPLEMENTED!
     //return a list of every square that is "controlled" by this piece. A square is controlled
     //if the piece capture into it legally.
+    //pre condition: all values are defined and all methods work, all indexes are in bounds
+    //post condition: returns a list of all controlled squares by the pawn (squares it can capture into)
     public ArrayList<Square> getControlledSquares(Board b, Square start) {
         Square[][] sq = b.getSquareArray();
         int multiplyColor = -1;
@@ -113,7 +115,8 @@ public class Piece {
     //returns an arraylist of squares which are legal to move to
     //please note that your piece must have some sort of logic. Just being able to move to every square on the board is not
     //going to score any points.
-    
+    //precondition: all variables and methods are defined, and working and all indexes are in bound
+    //post condition: returns arraylist of all moves pawn can go to legally
     public ArrayList<Square> getLegalMoves(Board b, Square start){
         try {
         ArrayList<Square> list = new ArrayList<>();
