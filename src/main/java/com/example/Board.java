@@ -43,8 +43,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     private boolean whiteTurn;
 
     // if the player is currently dragging a piece this variable contains it.
-    Piece currPiece;
-    public Piece lastMovedPiece;
+    eparonsPawn currPiece;
+    public eparonsPawn lastMovedPiece;
     //the square your piece came from when the user tries to move it.
     private Square fromMoveSquare;
     //the square your piece tries to go to when the user tries to move it.
@@ -101,13 +101,13 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     // it's up to you how you wish to arrange your pieces.
     void initializePieces() {
 
-        board[0][0].put(new Piece(true, RESOURCES_WKING_PNG));
+        board[0][0].put(new eparonsPawn(true, RESOURCES_WKING_PNG));
         
         for(int i = 0; i < 8; i++){
-            board[1][i].put(new Piece(true, RESOURCES_WPAWN_PNG));
+            board[1][i].put(new eparonsPawn(true, RESOURCES_WPAWN_PNG));
         }
         for(int i = 0; i < 8; i++){
-            board[6][i].put(new Piece(false, RESOURCES_BPAWN_PNG));
+            board[6][i].put(new eparonsPawn(false, RESOURCES_BPAWN_PNG));
         }
 
     }
@@ -120,11 +120,11 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         return whiteTurn;
     }
 
-    public void setCurrPiece(Piece p) {
+    public void setCurrPiece(eparonsPawn p) {
         this.currPiece = p;
     }
 
-    public Piece getCurrPiece() {
+    public eparonsPawn getCurrPiece() {
         return this.currPiece;
     }
 
