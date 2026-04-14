@@ -18,13 +18,15 @@ public class eparonsPawn extends Piece{
         super(isWhite, img_file);
         this.color = isWhite;
         this.imgFile = img_file;
-        try {
-            if (this.img == null) {
-                this.img = ImageIO.read(new File(System.getProperty("user.dir")+img_file));
-            }
-          } catch (IOException e) {
-            System.out.println("File not found: " + e.getMessage());
-          }
+        
+    }
+    @Override
+    public String toString(){
+        String c = "black";
+        if(color){
+            c = "white";
+        }
+        return "A " + c + " pawn";
     }
     public String getPieceName(){
         if(this != null){
