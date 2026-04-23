@@ -179,7 +179,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
                 System.out.println("trying to move to " + s);
                 s.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
-            for(Square s1: currPiece.getControlledSquares(this, sq)){
+            for(Square s1: currPiece.getControlledSquares(this.getSquareArray(), sq)){
                 System.out.println("trying to move to " + s1);
                 s1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
             }
@@ -202,7 +202,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
                 // }
                 if(board[i][j].getOccupyingPiece() != null && board[i][j].getOccupyingPiece().getColor()!= color ){
                     System.out.println("about to loop through "+i+" "+j);
-                    for(Square s: board[i][j].getOccupyingPiece().getControlledSquares(this, board[i][j])){
+                    for(Square s: board[i][j].getOccupyingPiece().getControlledSquares(this.getSquareArray(), board[i][j])){
                         if(s.getOccupyingPiece()!= null && s.getOccupyingPiece() instanceof King && s.getOccupyingPiece().getColor()== color ){
                             return true;
                         }

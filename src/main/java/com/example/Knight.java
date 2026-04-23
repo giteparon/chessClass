@@ -26,6 +26,7 @@ public class Knight extends Piece {
     // Post-condition: An ArrayList of Squares is returned composed of squares that
     // the piece can legally moved to (REGARDLESS OF IF THE SQUARES ARE OCCUPIED BY
     // PIECES OF THE SAME COLOR).
+    @Override
     public ArrayList<Square> getControlledSquares(Square[][] board, Square start) {
         int x = start.getCol();
         int y = start.getRow();

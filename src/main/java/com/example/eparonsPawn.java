@@ -43,8 +43,8 @@ public class eparonsPawn extends Piece{
     //if the piece capture into it legally.
     //pre condition: all values are defined and all methods work, all indexes are in bounds
     //post condition: returns a list of all controlled squares by the pawn (squares it can capture into)
-    public ArrayList<Square> getControlledSquares(Board b, Square start) {
-        Square[][] sq = b.getSquareArray();
+    @Override
+    public ArrayList<Square> getControlledSquares(Square[][] sq, Square start) {
         int multiplyColor = -1;
         if(color){
             multiplyColor = 1;

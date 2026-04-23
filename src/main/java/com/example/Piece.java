@@ -66,8 +66,9 @@ public class Piece {
 	}
 
 // to be implemented by each subclass
-	public ArrayList<Square> getControlledSquares(Board board, Square currentSquare) {
-
-		return null;
+	public ArrayList<Square> getControlledSquares(Square[][] board, Square currentSquare) {
+		
+		ArrayList<Square> a = new ArrayList();
+		return a;
 	}
 }

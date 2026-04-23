@@ -38,6 +38,7 @@ public class Bishop extends Piece {
     // configuration
     // post con - returns an arraylist of squares which this piece could legally
     // move to
+    
     public ArrayList<Square> getControlledSquares(Square[][] board, Square start) {
         ArrayList<Square> controlledSquares = new ArrayList<>();
 
