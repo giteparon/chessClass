@@ -1,4 +1,5 @@
 package com.example;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -6,20 +7,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import java.io.File;
 
 public class Piece {
-	private boolean color;
+	protected boolean color;
 	private BufferedImage img;
-
+	private String imgFile ;
 	public Piece(boolean color, String img_file) {
 		this.color = color;
-		try {
-			if (this.img == null) {
-				this.img = ImageIO.read(getClass().getResource(img_file));
-			}
-		} catch (IOException e) {
-			System.out.println("File not found: " + e.getMessage());
-		}
+        this.imgFile = img_file;
+        try {
+            if (this.img == null) {
+                this.img = ImageIO.read(new File(System.getProperty("user.dir")+img_file));
+            }
+          } catch (IOException e) {
+            System.out.println("File not found: " + e.getMessage());
+          }
 	}
 
 	public boolean getColor() {
@@ -35,7 +38,18 @@ public class Piece {
 		int y = currentSquare.getY();
 		g.drawImage(this.img, x, y, null);
 	}
+	public String getPieceName(){
+        if(this != null){
+            for(int i = 0; i < this.imgFile.length(); i++){
+                if(this.imgFile.charAt(i) == '.'){
+                    System.out.println(this.imgFile);
+                    return this.imgFile.substring(0, i);
 
+                }
+            }
+        }
+        return "no piece";
+    }
 	
 
 // to be overriden in each subclass
@@ -52,7 +66,7 @@ public class Piece {
 	}
 
 // to be implemented by each subclass
-	public ArrayList<Square> getControlledSquares(Square[][] board, Square currentSquare) {
+	public ArrayList<Square> getControlledSquares(Board board, Square currentSquare) {
 
 		return null;
 	}

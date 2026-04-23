@@ -1,4 +1,7 @@
 package com.example;
+//Made by Amir (aka eparon)
+//The pawn
+//behaves like a pawn except en passant and promoting. en passant works but it doesnt remove the piece when taken as i couldnt find the method fo it
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -10,16 +13,16 @@ import javax.imageio.ImageIO;
 
 //you will need to implement two functions in this file.
 public class eparonsPawn extends Piece{
-    private final boolean color;
-    private BufferedImage img; 
+
     private boolean hasMoved;
     private String imgFile ;
     public eparonsPawn(boolean isWhite, String img_file) {
         super(isWhite, img_file);
-        this.color = isWhite;
-        this.imgFile = img_file;
+        System.out.println("a");
         
     }
+    //pre condition: color is not null
+    //post condition: returns a string of the color of the pawn and the word pawn
     @Override
     public String toString(){
         String c = "black";
@@ -28,44 +31,12 @@ public class eparonsPawn extends Piece{
         }
         return "A " + c + " pawn";
     }
-    public String getPieceName(){
-        if(this != null){
-            for(int i = 0; i < this.imgFile.length(); i++){
-                if(this.imgFile.charAt(i) == '.'){
-                    System.out.println(this.imgFile);
-                    return this.imgFile.substring(0, i);
-
-                }
-            }
-        }
-        return "no piece";
-    }
+    
     
 
+
     
-    public boolean getColor() {
-        try{
-            return this.color;
-        }
-        catch(NullPointerException e){
-            System.out.println("get color erroerd " + e);
-            return false;
-        }
-    }
-    
-    public Image getImage() {
-        return img;
-    }
-    
-    //precondition: g and currentSquare must be on-null valid objects.
-    //postcondition: the image stored in the img property of this object is drawn to the screen.
-    public void draw(Graphics g, Square currentSquare) {
-        int x = currentSquare.getX();
-        int y = currentSquare.getY();
-        
-        g.drawImage(this.img, x, y, null);
-    }
-    
+
     
     // TO BE IMPLEMENTED!
     //return a list of every square that is "controlled" by this piece. A square is controlled
@@ -128,16 +99,16 @@ public class eparonsPawn extends Piece{
         Square[][] sq = b.getSquareArray();
         int multiplyColor = -1;
         int enPassantRow = 3;
-        if(color){
+        if(getColor()){
             multiplyColor = 1;
             enPassantRow++;
         }
         if(!sq[start.getRow() + multiplyColor][start.getCol()].isOccupied()){
             if(start.getRow() != 0 && start.getRow()!= 7){
-                if(start.getRow() == 6 && !color){
+                if(start.getRow() == 6 && !getColor()){
                     list.add(sq[start.getRow() + (2 * multiplyColor)][start.getCol()]);
                 }
-                if(start.getRow() == 1 && color){
+                if(start.getRow() == 1 && getColor()){
                     list.add(sq[start.getRow() + (2 * multiplyColor)][start.getCol()]);
                 }
         // else if(start.getRow() == 7 && color != true){
