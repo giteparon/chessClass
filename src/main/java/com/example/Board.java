@@ -191,6 +191,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         }
         repaint();
     }
+    //precodition - color is not null, no piece returns null as the list 
+    //post condition - returns true if the any piece thretens the king , false otherwise
     private boolean isInCheck(boolean color){
         Square kSquare = board[0][0];
         
